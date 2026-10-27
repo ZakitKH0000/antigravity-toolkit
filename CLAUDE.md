@@ -23,6 +23,6 @@
 
 ## Технологии (план)
 
-Установщик — как у русификатора: C# **5**, WinForms, .NET Framework **4.8**, x64, штатный `csc.exe`, Windows PowerShell **5.1**. Поставка — один EXE. Пока установщика нет: готовы команды в `skills/` и пресеты в `presets/rules/`.
+Установщик — как у русификатора: C# **5**, WinForms, .NET Framework **4.8**, x64, штатный `csc.exe`, Windows PowerShell **5.1**. Поставка — один EXE. Пока установщика нет: готовы команды в `skills/` и правила в `rules/`. Файлы правил называются `antigravity-toolkit-*.md`, содержат frontmatter `trigger` (`always_on` или `model_decision`) и маркер `<!-- antigravity-toolkit:<id> -->` — по нему установщик отличает свои файлы. Формат повторяет работающее правило языка русификатора.
 
 Claude Desktop — MSIX: файлы в `%LOCALAPPDATA%`, созданные командами Claude, не видны программам пользователя. `~/.gemini` лежит в профиле, а не в `%LOCALAPPDATA%`, но итоговую установку всё равно проверяет владелец запуском.
