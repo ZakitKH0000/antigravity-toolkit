@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "context7": {
+      "serverUrl": "https://mcp.context7.com/mcp"
+    },
+    "deepwiki": {
+      "serverUrl": "https://mcp.deepwiki.com/mcp"
+    },
+    "microsoft-learn": {
+      "serverUrl": "https://learn.microsoft.com/api/mcp"
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "env": {
+        "MEMORY_FILE_PATH": "C:/Users/<имя>/.gemini/antigravity-toolkit/memory.jsonl"
+      }
+    }
+  }
+}
