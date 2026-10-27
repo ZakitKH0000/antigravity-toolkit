@@ -1,15 +1,21 @@
 # Контекст для Claude
 
-Проект **Antigravity Toolkit** — набор улучшений для агента в Antigravity App: слэш-команды (skills), пресеты правил и MCP-серверы, упакованные в один штатный плагин Antigravity. Общение с владельцем — на русском. Вопросы и предложения владельцу задавай с вариантами ответа. Прочитай этот файл, затем `README.md` и `docs/PLAN.md`.
+Проект **Antigravity Toolkit** — набор улучшений для агента в Antigravity App: слэш-команды (skills), пресеты правил и MCP-серверы. Общение с владельцем — только на русском, включая итоговые сообщения. Вопросы и предложения владельцу задавай с вариантами ответа. Прочитай этот файл, затем `README.md` и `docs/PLAN.md`.
 
 ## Связь с русификатором
 
-Это **отдельный** проект от Antigravity Russian (`C:\Users\zikri\Desktop\AntigravityRussian`, https://github.com/ZakitKH0000/antigravity-russian). Русификатор меняет только `resources/app.asar`, анлокер региона (https://github.com/confeden/Antigravity) — `language_server`/`agy`, NRPT и свою службу. Toolkit не трогает ни то, ни другое: он пишет только в папку своего плагина в `~/.gemini/config/plugins/antigravity-toolkit/`. Правило языка русификатора (`~/.gemini/config/rules/antigravity-russian.md`) не трогаем и не дублируем.
+Это **отдельный** проект от Antigravity Russian (`C:\Users\zikri\Desktop\AntigravityRussian`, https://github.com/ZakitKH0000/antigravity-russian). Русификатор меняет только `resources/app.asar`, анлокер региона (https://github.com/confeden/Antigravity) — `language_server`/`agy`, NRPT и свою службу. Toolkit не трогает ни то, ни другое: он пишет только свои папки команд в `~/.gemini/config/skills/` и (позже) свои файлы правил в `~/.gemini/config/rules/`. Правило языка русификатора (`~/.gemini/config/rules/antigravity-russian.md`) не трогаем и не дублируем.
+
+## Как Antigravity находит команды (проверено владельцем на 2.26)
+
+- Папка-плагин, просто скопированная в `~/.gemini/config/plugins/`, **не подхватывается**: её нет ни в списке плагинов, ни в меню «/». Плагины Google установлены через каталог и записаны в `config.json` (`plugins.<имя>.installedFrom`). Регистрацию своего плагина через `config.json` не делаем — это чужой файл.
+- Отдельные команды в `~/.gemini/config/skills/<имя>/SKILL.md` **работают**: после перезапуска видны в меню «/».
+- Antigravity держит открытыми файлы в папках, за которыми следит; удаление при запущенном Antigravity может не пройти.
 
 ## Главные правила
 
-1. Пишем только в папку своего плагина. Владение подтверждается маркером `.antigravity-toolkit` внутри неё; без маркера папку не перезаписываем и не удаляем.
-2. Глобальные `~/.gemini/config/mcp_config.json`, `config.json`, `rules/` пользователя не изменяем. Включение/выключение плагина — штатный переключатель Antigravity (запись в `config.json` делает сам Antigravity).
+1. Пишем только в свои папки команд и свои файлы правил. Владение подтверждается маркером `.antigravity-toolkit` в каждой папке команды (у правил — маркер внутри файла); без маркера чужое не перезаписываем и не удаляем. Если папка с таким именем уже есть и она не наша — пропускаем.
+2. `~/.gemini/config/mcp_config.json` и `config.json` пользователя без отдельного согласования с владельцем не изменяем.
 3. Не меняем EXE, Language Server, `app.asar`, DNS, прокси и настройки безопасности.
 4. Токены и ключи MCP не попадают в Git, логи и отчёты. Ключи вводит сам пользователь.
 5. Не завершаем Antigravity принудительно.
@@ -17,6 +23,6 @@
 
 ## Технологии (план)
 
-Установщик — как у русификатора: C# **5**, WinForms, .NET Framework **4.8**, x64, штатный `csc.exe`, Windows PowerShell **5.1**. Поставка — один EXE. Пока установщика нет: готов только сам плагин в `plugin/`.
+Установщик — как у русификатора: C# **5**, WinForms, .NET Framework **4.8**, x64, штатный `csc.exe`, Windows PowerShell **5.1**. Поставка — один EXE. Пока установщика нет: готовы команды в `skills/` и пресеты в `presets/rules/`.
 
 Claude Desktop — MSIX: файлы в `%LOCALAPPDATA%`, созданные командами Claude, не видны программам пользователя. `~/.gemini` лежит в профиле, а не в `%LOCALAPPDATA%`, но итоговую установку всё равно проверяет владелец запуском.
