@@ -1,0 +1,12 @@
+/bin/
+/dist/
+/work/
+*.user
+*.suo
+.vs/
+*.pfx
+*.p12
+*.log
+*.zip
+.DS_Store
+.agents/handoff/
